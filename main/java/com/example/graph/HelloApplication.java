@@ -26,6 +26,9 @@ public class HelloApplication extends Application {
     private final int DISTANCE_OF_BUTTON_WIDTH = 130;
     private final int SIZE_PREF_BUTTON_OF_WIDTH = 120;
 
+
+    private final int SSS = 110;
+
     @Override
     public void start(Stage stage) throws IOException {
         Group group = new Group();
