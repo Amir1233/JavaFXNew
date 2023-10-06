@@ -138,7 +138,7 @@ public class HelloApplication extends Application {
         button2.setOnAction(actionEvent -> {
             Step step = x -> Math.sin(x[0]);
             for (int i = 140; i <= 180; i++) {  // four canal
-                group.getChildren().addAll(new Line((i / 0.5) + LABEL_WIDTH, step.paint(i) * 20 + LABEL_HEIGHT *   4 - 60, ((i+1)/0.5) + LABEL_WIDTH, step.paint(i+1) * 20 + LABEL_HEIGHT *   4 - 60));
+                group.getChildren().addAll(new Line((i / 0.5) - 280 + LABEL_WIDTH, -step.paint(i) * 20 + LABEL_HEIGHT *   4 - 60, ((i+1)/0.5) - 280 + LABEL_WIDTH, -step.paint(i+1) * 20 + LABEL_HEIGHT *   4 - 60));
             }
         });
 
