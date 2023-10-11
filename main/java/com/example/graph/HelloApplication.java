@@ -9,11 +9,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import static java.nio.ByteBuffer.wrap;
 
 public class HelloApplication extends Application {
     private final int WIDTH = 1440;
@@ -78,8 +83,7 @@ public class HelloApplication extends Application {
         button.setOnAction(actionEvent -> {
             // connect in interface in lambda
             for (int i = 0; i < array.length - 1; i++) {
-                group.getChildren().addAll(new Line((i * 2.84) + LABEL_WIDTH, -(array[i] * 10) + LABEL_HEIGHT / 2, ((i + 1) * 2.84) + LABEL_WIDTH,
-                        -(array[i + 1] * 10) + LABEL_HEIGHT / 2));
+                group.getChildren().addAll(new Line((i * 2.84) + LABEL_WIDTH, -(array[i] * 10) + LABEL_HEIGHT / 2, ((i + 1) * 2.84) + LABEL_WIDTH, -(array[i + 1] * 10) + LABEL_HEIGHT / 2));
             }
         });
 
@@ -93,8 +97,8 @@ public class HelloApplication extends Application {
                 countOfArrayA += array[k] * Math.cos((2 * Math.PI / array.length) * n * k);
                 countOfArrayB += array[k] * Math.sin((2 * Math.PI / array.length) * n * k);
             }
-            countOfArrayA *= (float) 1 / array.length;
-            countOfArrayB *= (float) 1 / array.length;
+            countOfArrayA *= 1.0 / array.length;
+            countOfArrayB *= 1.0 / array.length;
             a[n] = countOfArrayA;
             b[n] = countOfArrayB;
             c[n] = (float) Math.sqrt(Math.pow(a[n], 2) + Math.pow(b[n], 2));
@@ -124,7 +128,7 @@ public class HelloApplication extends Application {
 
         C0 *= (float) 1 / array.length;
 
-        for (int k = 35; k <= 45; k++) {
+        for (int k = 140; k <= 180; k++) {
             float sum = (float) 0;
             for (int n = 1; n <= array.length / 2; n++) {
                 sum += (a[n] * Math.cos((2 * Math.PI / array.length) * n * k)) + (b[n] * Math.sin((2 * Math.PI / array.length) * n * k));
@@ -137,8 +141,9 @@ public class HelloApplication extends Application {
         //Fill signal cypher function
         button2.setOnAction(actionEvent -> {
             Step step = x -> Math.sin(x[0]);
-            for (int i = 140; i <= 180; i++) {  // four canal
-                group.getChildren().addAll(new Line((i / 0.5) - 280 + LABEL_WIDTH, -step.paint(i) * 20 + LABEL_HEIGHT *   4 - 60, ((i+1)/0.5) - 280 + LABEL_WIDTH, -step.paint(i+1) * 20 + LABEL_HEIGHT *   4 - 60));
+            for (int i = 140; i <= 180; i++) {  // two variance four canal
+
+                group.getChildren().addAll(new Line((i * 6) + LABEL_WIDTH - 840, -(array[i]) * 15 + LABEL_HEIGHT * 4 - 60, ((i + 1) * 6) + LABEL_WIDTH - 840, -(array[i + 1]) * 15 + LABEL_HEIGHT * 4 - 60));
             }
         });
 
@@ -192,16 +197,16 @@ public class HelloApplication extends Application {
 }
 
 class FileReader extends HelloApplication {
-
     float[] Reader() {
         final String s = "/Users/amir/Downloads/Graph/src/JavaFXNew/main/resources/filekr2.dat";
         float[] array = new float[500];
+
         try (FileInputStream fileInputStream = new FileInputStream((s))) {
             byte[] buffer = new byte[4];
             int i = 0;
             while ((fileInputStream.read(buffer)) != -1) {
-                float number = ByteBuffer.wrap(buffer).order(ByteOrder.BIG_ENDIAN).getInt();
-                array[i] = number / 1000000000;
+                float number = wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).getFloat();
+                array[i] = number;
                 i++;
             }
         } catch (IOException e) {
