@@ -9,14 +9,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteOrder;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+
 
 import static java.nio.ByteBuffer.wrap;
 
@@ -142,7 +139,6 @@ public class HelloApplication extends Application {
         button2.setOnAction(actionEvent -> {
             Step step = x -> Math.sin(x[0]);
             for (int i = 140; i <= 180; i++) {  // two variance four canal
-
                 group.getChildren().addAll(new Line((i * 6) + LABEL_WIDTH - 840, -(array[i]) * 15 + LABEL_HEIGHT * 4 - 60, ((i + 1) * 6) + LABEL_WIDTH - 840, -(array[i + 1]) * 15 + LABEL_HEIGHT * 4 - 60));
             }
         });
